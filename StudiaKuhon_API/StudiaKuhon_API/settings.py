@@ -41,8 +41,9 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework.authtoken',
 
-    'rest_auth',
-    
+    'djoser',
+    'drf_yasg',
+
     'shop.apps.ShopConfig',
     'wishlist.apps.WishlistConfig',
     'utils.apps.UtilsConfig',
@@ -135,3 +136,25 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'utils.User'
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.TokenAuthentication',
+        'rest_framework.authentication.BasicAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+    ),
+}
+
+SWAGGER_SETTINGS = {
+   'SECURITY_DEFINITIONS': {
+      'Basic': {
+            'type': 'basic'
+      },
+      'api_key': {
+            'type': 'apiKey',
+            'in': 'header',
+            'name': 'Authorization',
+      }
+   },
+   'FORCE_SCRIPT_NAME': 'http://localhost:8000/api/v1/',
+}
