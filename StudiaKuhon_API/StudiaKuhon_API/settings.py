@@ -39,6 +39,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'rest_framework',
+    'rest_framework.authtoken',
+
+    'rest_auth',
     
     'shop.apps.ShopConfig',
     'wishlist.apps.WishlistConfig',
