@@ -5,14 +5,9 @@ from django.conf import settings
 from .models import *
 
 
-class PhotoListingField(serializers.RelatedField, ABC):
-    def to_representation(self, value):
-        return value.url
-
-
 class TagListingField(serializers.RelatedField, ABC):
     def to_representation(self, value):
-        return value.title
+        return value.title if hasattr(value, "title") else value.url
 
 
 class StyleSerializer(serializers.ModelSerializer):
