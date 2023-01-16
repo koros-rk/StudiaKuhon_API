@@ -50,7 +50,7 @@ class ProductSerializer(serializers.ModelSerializer):
         )
 
         for photo in validated_data['gallery']:
-            photo_obj = Photo.objects.get_or_create(url=photo['url'])
+            photo_obj = Photo.objects.create(url=photo['url'])
             new_product.gallery.add(photo_obj)
 
         for style in validated_data['styles']:
