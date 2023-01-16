@@ -33,3 +33,8 @@ class ProductViewSet(viewsets.ModelViewSet):
         related_data = serializer.data
         related_data["related"] = related
         return Response(related_data)
+
+    def destroy(self, request, *args, **kwargs):
+        instance = self.get_object()
+        self.perform_destroy(instance)
+        return Response(status=status.HTTP_204_NO_CONTENT)
