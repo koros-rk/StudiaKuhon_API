@@ -1,11 +1,13 @@
 from rest_framework import viewsets
+from rest_framework.permissions import DjangoModelPermissionsOrAnonReadOnly
+
 from .models import Palette, Style, Handle, Material, Photo
 from .serializers import StyleSerializer, MaterialSerializer, ColourSerializer, HandleSerializer, PhotoSerializer
-from django.conf import settings
 
 
 class StylesViewSet(viewsets.ModelViewSet):
     serializer_class = StyleSerializer
+    permission_classes = [DjangoModelPermissionsOrAnonReadOnly]
 
     def get_queryset(self):
         queryset = Style.objects.all()
@@ -14,6 +16,7 @@ class StylesViewSet(viewsets.ModelViewSet):
 
 class MaterialsViewSet(viewsets.ModelViewSet):
     serializer_class = MaterialSerializer
+    permission_classes = [DjangoModelPermissionsOrAnonReadOnly]
 
     def get_queryset(self):
         queryset = Material.objects.all()
@@ -22,6 +25,7 @@ class MaterialsViewSet(viewsets.ModelViewSet):
 
 class ColoursViewSet(viewsets.ModelViewSet):
     serializer_class = ColourSerializer
+    permission_classes = [DjangoModelPermissionsOrAnonReadOnly]
 
     def get_queryset(self):
         queryset = Palette.objects.all()
@@ -30,6 +34,7 @@ class ColoursViewSet(viewsets.ModelViewSet):
 
 class HandlesViewSet(viewsets.ModelViewSet):
     serializer_class = HandleSerializer
+    permission_classes = [DjangoModelPermissionsOrAnonReadOnly]
 
     def get_queryset(self):
         queryset = Handle.objects.all()
@@ -38,6 +43,7 @@ class HandlesViewSet(viewsets.ModelViewSet):
 
 class PhotoViewSet(viewsets.ModelViewSet):
     serializer_class = PhotoSerializer
+    permission_classes = [DjangoModelPermissionsOrAnonReadOnly]
 
     def get_queryset(self):
         queryset = Photo.objects.all()

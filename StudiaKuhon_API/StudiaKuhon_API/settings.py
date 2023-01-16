@@ -43,6 +43,7 @@ INSTALLED_APPS = [
 
     'djoser',
     'drf_yasg',
+    'django_filters',
 
     'shop.apps.ShopConfig',
     'wishlist.apps.WishlistConfig',
@@ -138,6 +139,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTH_USER_MODEL = 'utils.User'
 
 REST_FRAMEWORK = {
+    # 'DEFAULT_FILTER_BACKENDS': ('django_', ),
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework.authentication.TokenAuthentication',
         'rest_framework.authentication.BasicAuthentication',
