@@ -1,6 +1,10 @@
 from rest_framework import viewsets
-from rest_framework.permissions import DjangoModelPermissionsOrAnonReadOnly
+from rest_framework.permissions import DjangoModelPermissionsOrAnonReadOnly, IsAuthenticated
+from rest_framework.renderers import JSONRenderer
+from rest_framework.response import Response
+from rest_framework.views import APIView
 
+from .messaging import send_telegram
 from .models import Palette, Style, Handle, Material, Photo
 from .serializers import StyleSerializer, MaterialSerializer, ColourSerializer, HandleSerializer, PhotoSerializer
 
@@ -48,6 +52,23 @@ class PhotoViewSet(viewsets.ModelViewSet):
     def get_queryset(self):
         queryset = Photo.objects.all()
         return queryset
+
+
+class Messaging(APIView):
+    renderer_classes = [JSONRenderer]
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request, format=None):
+        user = request.user
+        message = ""
+        for item in request.data["products"]:
+            message += "User: {0}\n"\
+                        "Title: {1}\n" \
+                        "url: {2}\n" \
+                        "----------\n".format(user, item["title"], "http://127.0.0.1:8000/api/v1/products/" + str(item["id"]))
+
+        send_telegram(message)
+        return Response(message)
 
 
 sets = [("styles", StylesViewSet), ("materials", MaterialsViewSet), ("colors", ColoursViewSet),
