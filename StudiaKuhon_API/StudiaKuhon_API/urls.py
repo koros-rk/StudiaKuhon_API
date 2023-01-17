@@ -2,6 +2,7 @@ from django.contrib import admin
 from django.urls import path, include, re_path
 from rest_framework import routers
 
+from shop.product_gallery import ProductGallery
 from .yasg import urlpatterns as doc_urls
 from utils.views import sets
 from shop.views import ProductViewSet
@@ -16,6 +17,7 @@ urlpatterns = [
     path('api/v1/', include(router.urls)),
     path('api/v1/auth2', include('rest_framework.urls')),
     path('api/v1/auth/', include('djoser.urls')),
+    path('api/v1/productgallery/', ProductGallery.as_view()),
     re_path(r'^api/v1/auth/', include('djoser.urls.authtoken')),
 ]
 
