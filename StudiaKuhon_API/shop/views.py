@@ -25,7 +25,7 @@ class ProductViewSet(viewsets.ModelViewSet):
         instance = self.get_object()
         serializer = self.get_serializer(instance)
         product_obj = Product.objects.filter(~Q(id=instance.id), main_material=instance.main_material.id)
-        pprint.pprint(product_obj)
+        # pprint.pprint(product_obj)
         related = []
         for k in product_obj:
             ser = self.get_serializer(k)
