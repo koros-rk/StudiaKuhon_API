@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from rest_framework import viewsets
 from rest_framework.permissions import DjangoModelPermissionsOrAnonReadOnly, IsAuthenticated
 from rest_framework.renderers import JSONRenderer
@@ -56,17 +58,32 @@ class PhotoViewSet(viewsets.ModelViewSet):
 
 class Messaging(APIView):
     renderer_classes = [JSONRenderer]
-    permission_classes = [IsAuthenticated]
+
+    # permission_classes = [IsAuthenticated]
 
     def post(self, request, format=None):
         user = request.user
         message = ""
         for item in request.data["products"]:
-            message += "User: {0}\n"\
-                        "Title: {1}\n" \
-                        "url: {2}\n" \
-                        "----------\n".format(user, item["title"], "http://127.0.0.1:8000/api/v1/products/" + str(item["id"]))
+            message += "User: {0}\n" \
+                       "Title: {1}\n" \
+                       "url: {2}\n" \
+                       "----------\n".format(user, item["title"],
+                                             "http://127.0.0.1:8000/api/v1/products/" + str(item["id"]))
 
+        send_telegram(message)
+        return Response(message)
+
+
+class CustomOrder(APIView):
+    renderer_classes = [JSONRenderer]
+
+    def post(self, request, format=None):
+        message = "Name: {0}\n" \
+                  "Phone: {1}\n" \
+                  "Email: {2}\n" \
+                  "Auth_time: {3}:\n".format(request.data["name"], request.data["phone"], request.data["email"],
+                                             datetime.now())
         send_telegram(message)
         return Response(message)
 
