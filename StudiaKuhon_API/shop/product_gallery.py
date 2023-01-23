@@ -1,4 +1,3 @@
-
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.renderers import JSONRenderer
 from rest_framework.response import Response
@@ -13,7 +12,7 @@ class ProductGallery(APIView):
     permission_classes = [IsAuthenticated]
     serializer_class = ProductSerializer
 
-    def get(self, request):
+    def get(self, request, format=None):
         instance = Product.objects.filter().order_by('?')[:5]
         serializer = self.serializer_class(instance, many=True)
         return Response(serializer.data)

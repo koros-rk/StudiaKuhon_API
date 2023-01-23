@@ -89,7 +89,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'StudiaKuhon_API',
         'USER': 'postgres',
-        'PASSWORD': '0803',
+        'PASSWORD': '75987598',
         'HOST': 'localhost',
     }
 }
@@ -145,6 +145,9 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.BasicAuthentication',
         'rest_framework.authentication.SessionAuthentication',
     ),
+    # 'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
+    # 'PAGE_SIZE': 5,
+    # (якщо треба - включиш цю ще цю шарманку)
 }
 
 SWAGGER_SETTINGS = {
