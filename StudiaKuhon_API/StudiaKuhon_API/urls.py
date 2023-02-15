@@ -4,7 +4,7 @@ from rest_framework import routers
 
 from shop.product_gallery import ProductGallery
 from .yasg import urlpatterns as doc_urls
-from utils.views import sets, Messaging, CustomOrder
+from utils.views import sets, Messaging
 from shop.views import ProductViewSet
 
 router = routers.DefaultRouter()
@@ -16,7 +16,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/v1/', include(router.urls)),
     path('api/v1/order', Messaging.as_view()),
-    path('api/v1/customorder', CustomOrder.as_view()),
     path('api/v1/auth2', include('rest_framework.urls')),
     path('api/v1/auth/', include('djoser.urls')),
     path('api/v1/products/gallery', ProductGallery.as_view()),

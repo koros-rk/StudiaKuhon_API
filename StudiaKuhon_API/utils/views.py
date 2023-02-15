@@ -1,10 +1,12 @@
 from datetime import datetime
 
+from drf_yasg.utils import swagger_auto_schema
 from rest_framework import viewsets
 from rest_framework.permissions import DjangoModelPermissionsOrAnonReadOnly, IsAuthenticated
 from rest_framework.renderers import JSONRenderer
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from drf_yasg import openapi
 
 from .messaging import send_telegram
 from .models import Palette, Style, Handle, Material, Photo
@@ -58,34 +60,22 @@ class PhotoViewSet(viewsets.ModelViewSet):
 
 class Messaging(APIView):
     renderer_classes = [JSONRenderer]
-    permission_classes = [IsAuthenticated]
 
+    @swagger_auto_schema(request_body=openapi.Schema(
+        type=openapi.TYPE_OBJECT,
+        properties={
+            'message': openapi.Schema(type=openapi.TYPE_STRING, description='Order message'),
+            'user': openapi.Schema(type=openapi.TYPE_BOOLEAN, description='Product title'),
+        }))
     def post(self, request):
-        user = request.user
-        message = ""
-        for item in request.data["products"]:
-            message += "User: {0}\n" \
-                       "Title: {1}\n" \
-                       "url: {2}\n" \
-                       "----------\n".format(user, item["title"],
-                                             "http://127.0.0.1:8000/api/v1/products/" + str(item["id"]))
-
-        send_telegram(message)
-        return Response(message)
-
-
-class CustomOrder(APIView):
-    renderer_classes = [JSONRenderer]
-    permission_classes = [IsAuthenticated]
-
-    def post(self, request):
-        message = "Name: {0}\n" \
-                  "Phone: {1}\n" \
-                  "Email: {2}\n" \
-                  "Auth_time: {3}:\n".format(request.data["name"], request.data["phone"], request.data["email"],
-                                             datetime.now())
-        send_telegram(message)
-        return Response(message)
+        message = request.data['message']
+        if request.data['user']:
+            user = request.user
+            send_telegram(user.username + "\n" + message)
+            return Response(status=200)
+        else:
+            send_telegram(message)
+            return Response(status=200)
 
 
 sets = [("styles", StylesViewSet), ("materials", MaterialsViewSet), ("colors", ColoursViewSet),
