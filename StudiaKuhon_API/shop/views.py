@@ -1,7 +1,7 @@
 from django.db.models import Q
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import viewsets, status
-from rest_framework.permissions import DjangoModelPermissionsOrAnonReadOnly
+from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from rest_framework.response import Response
 
 from .models import *
@@ -15,7 +15,7 @@ class ProductViewSet(viewsets.ModelViewSet):
     serializer_class = ProductSerializer
     filter_backends = (DjangoFilterBackend,)
     filterset_class = ProductFilter
-    permission_classes = [DjangoModelPermissionsOrAnonReadOnly]
+    permission_classes = [IsAuthenticatedOrReadOnly]
     pagination_class = SetPaginationProducts
 
     def get_queryset(self):

@@ -58,10 +58,9 @@ class PhotoViewSet(viewsets.ModelViewSet):
 
 class Messaging(APIView):
     renderer_classes = [JSONRenderer]
+    permission_classes = [IsAuthenticated]
 
-    # permission_classes = [IsAuthenticated]
-
-    def post(self, request, format=None):
+    def post(self, request):
         user = request.user
         message = ""
         for item in request.data["products"]:
@@ -77,8 +76,9 @@ class Messaging(APIView):
 
 class CustomOrder(APIView):
     renderer_classes = [JSONRenderer]
+    permission_classes = [IsAuthenticated]
 
-    def post(self, request, format=None):
+    def post(self, request):
         message = "Name: {0}\n" \
                   "Phone: {1}\n" \
                   "Email: {2}\n" \

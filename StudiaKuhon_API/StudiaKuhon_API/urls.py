@@ -19,7 +19,7 @@ urlpatterns = [
     path('api/v1/customorder', CustomOrder.as_view()),
     path('api/v1/auth2', include('rest_framework.urls')),
     path('api/v1/auth/', include('djoser.urls')),
-    path('api/v1/productgallery/', ProductGallery.as_view()),
+    path('api/v1/products/gallery', ProductGallery.as_view()),
     re_path(r'^api/v1/auth/', include('djoser.urls.authtoken')),
 ]
 
