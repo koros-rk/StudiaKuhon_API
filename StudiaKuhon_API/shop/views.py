@@ -24,6 +24,7 @@ class ProductViewSet(viewsets.ModelViewSet):
     def retrieve(self, request, *args, **kwargs):
         instance = self.get_object()
         serializer = self.get_serializer(instance)
+        # Переробити фільтрові вуха Сані
         product_obj = Product.objects.filter(~Q(id=instance.id), main_material=instance.main_material.id)
         related = []
         for k in product_obj:

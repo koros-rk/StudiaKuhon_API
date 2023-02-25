@@ -6,9 +6,13 @@ from shop.product_gallery import ProductGallery
 from .yasg import urlpatterns as doc_urls
 from utils.views import sets, Messaging, CustomOrder
 from shop.views import ProductViewSet
+from partshop.views import CategoryViewSet, PartColorViewSet, FurnitureViewSet
 
 router = routers.DefaultRouter()
 router.register(r'products', ProductViewSet, basename='products')
+router.register(r'furniture_categories', CategoryViewSet, basename='furniture_categories')
+router.register(r'furniture_colors', PartColorViewSet, basename='furniture_colors')
+router.register(r'furniture', FurnitureViewSet, basename='furniture')
 for title, VSet in sets:
     router.register(r""+title, VSet, basename=title)
 

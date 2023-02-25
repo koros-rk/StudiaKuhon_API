@@ -50,7 +50,7 @@ class ProductSerializer(serializers.ModelSerializer):
         )
 
         for photo in validated_data['gallery']:
-            photo_obj = Photo.objects.create(url=photo['url'])
+            photo_obj = Photo.objects.get_or_create(url=photo['url'])[0].id
             new_product.gallery.add(photo_obj)
 
         for style in validated_data['styles']:
@@ -87,14 +87,13 @@ class ProductSerializer(serializers.ModelSerializer):
         for attr, value in m2m_fields:
             for i in value:
                 for k, v in i.items():
-                    match attr:
-                        case 'gallery':
-                            instance.gallery.add(Photo.objects.get_or_create(url=v))
-                        case 'styles':
+                    if attr == 'gallery':
+                            instance.gallery.add(Photo.objects.get_or_create(url=v))[0].id
+                    elif attr == 'styles':
                             instance.styles.add(Style.objects.get(title=v))
-                        case 'colours':
+                    elif attr == 'colours':
                             instance.colours.add(Palette.objects.get(title=v))
-                        case 'materials':
+                    elif attr == 'materials':
                             instance.materials.add(Material.objects.get(title=v))
 
         return instance

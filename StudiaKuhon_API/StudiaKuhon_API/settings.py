@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'shop.apps.ShopConfig',
     'wishlist.apps.WishlistConfig',
     'utils.apps.UtilsConfig',
+    'partshop.apps.PartshopConfig'
 ]
 
 MIDDLEWARE = [
