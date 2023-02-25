@@ -71,7 +71,7 @@ class Messaging(APIView):
         message = request.data['message']
         if request.data['user']:
             user = request.user
-            send_telegram(user.username + "\n" + message)
+            send_telegram("User: " + user.username + "\n" + message)
             return Response(status=200)
         else:
             send_telegram(message)
